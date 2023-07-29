@@ -2,6 +2,8 @@
 
 import React, { Dispatch, ReactEventHandler, SetStateAction, useEffect, useState } from "react";
 import { useContext, createContext } from "react";
+import { TOKEN } from '../API';
+import { X_REQUEST_ID } from '../API';
 
 type Due = {
     date: string,
@@ -62,7 +64,7 @@ function StoreProvider({ children }: any) {
         const response = await fetch(url, {
             method: 'GET',
             headers: new Headers({
-                "Authorization": "Bearer f537f19a7d6ea045ec2db7d7597ecb526ed9c362"
+                "Authorization": `Bearer ${TOKEN}`
             })
         })
 
@@ -97,8 +99,9 @@ function StoreProvider({ children }: any) {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
-                "X-Request-Id": "c5c378a8-d569-48ff-ab56-e4a026e98378",
-                "Authorization": "Bearer f537f19a7d6ea045ec2db7d7597ecb526ed9c362",
+                "X-Request-Id": `${X_REQUEST_ID}`,
+                "Authorization": `Bearer ${TOKEN}`,
+
             },
             body: JSON.stringify(todoData),
         })
