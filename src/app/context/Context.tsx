@@ -42,7 +42,7 @@ interface Context {
     setOpenUpdate: Dispatch<SetStateAction<boolean>>,
     setOpen: Dispatch<SetStateAction<boolean>>,
     handleAddFormSubmit: ReactEventHandler,
-    handleUpdateFormSubmit: (event: React.MouseEvent, id: string) => void,
+    handleUpdateFormSubmit: (event: React.MouseEvent) => void,
     handleUpdateTodo: (event: React.MouseEvent, id: string) => void,
     todoUpdate: TodoData,
     setTodoUpdate: Dispatch<SetStateAction<TodoData>>,
@@ -124,8 +124,21 @@ function StoreProvider({ children }: any) {
         }
 
     }
-    const deleteTodo = () => {
-
+    const deleteTodo = async(id: string) => {
+        console.log(id)
+        try {
+            const response = await fetch(`${url}/${id}`, {
+                method: 'DELETE',
+                headers: new Headers({
+                    "Authorization": `Bearer ${TOKEN}`
+                })
+            })
+            const data = await response.json()
+            return data
+            console.log(data)
+        }catch(error){
+            throw new Error("Poor network connection")
+        }
     }
 
     const getTodo = async (id: string) => {
@@ -153,10 +166,13 @@ function StoreProvider({ children }: any) {
     const handleUpdateTodo = (event: React.MouseEvent, id: string) => {
         getTodo(id)
         setOpenUpdate(true)
-        // if(todoUpdate.content)setOpenUpdate(true)
+        setId(id)
+      
     }
 
-    const handleUpdateFormSubmit = async (event: React.MouseEvent, id: string) => {
+    const handleUpdateFormSubmit = async (event: React.MouseEvent) => {
+       
+        console.log(id)
         try {
             const response = await fetch(`${url}/${id}`, {
                 method: 'POST',
@@ -169,8 +185,9 @@ function StoreProvider({ children }: any) {
             })
             if (response.status === 200) {
                 const data = await response.json();
-                deleteTodo(id)
                 getAllTodos();
+                // if(await deleteTodo(id))  
+               
             }
 
         } catch (error) {

@@ -5,7 +5,7 @@ import { useStoreContext } from "../context/Context";
 
 const UpdateTodo = () => {
 
-    const { setOpenUpdate, handleAddFormSubmit, handleUpdateFormSubmit, setTodoUpdate, todoUpdate, id } = useStoreContext();
+    const { setOpenUpdate, handleAddFormSubmit, handleUpdateFormSubmit, setTodoUpdate, todoUpdate } = useStoreContext();
     const { content, description, due_date } = todoUpdate;
     return (
         <div>
@@ -39,7 +39,7 @@ const UpdateTodo = () => {
                 </div>
             </form>
             <div>
-                <button type="button" onClick={(event) => handleUpdateFormSubmit(event, id)}>Done</button>
+                <button type="button" onClick={(event) => handleUpdateFormSubmit(event)}>Done</button>
                 <button type="button" onClick={() => setOpenUpdate(false)}> close X</button>
             </div>
 
