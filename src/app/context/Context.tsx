@@ -34,17 +34,17 @@ interface Context {
     data: Todo[] | null,
     handleAddTodo: Function,
     todoData: TodoData,
-    setTodoData: Dispatch<SetStateAction<TodoData>>,
+    todoUpdate: TodoData,
     open: boolean,
     openUpdate: boolean,
     id: string,
-    // setId: Dispatch<SetStateAction<string>>,
+    setTodoData: Dispatch<SetStateAction<TodoData>>,
+    deleteTodo: (id: string) => void,
     setOpenUpdate: Dispatch<SetStateAction<boolean>>,
     setOpen: Dispatch<SetStateAction<boolean>>,
     handleAddFormSubmit: ReactEventHandler,
     handleUpdateFormSubmit: (event: React.MouseEvent) => void,
     handleUpdateTodo: (event: React.MouseEvent, id: string) => void,
-    todoUpdate: TodoData,
     setTodoUpdate: Dispatch<SetStateAction<TodoData>>,
 }
 
@@ -124,7 +124,7 @@ function StoreProvider({ children }: any) {
         }
 
     }
-    const deleteTodo = async(id: string) => {
+    const deleteTodo = async (id: string) => {
         console.log(id)
         try {
             const response = await fetch(`${url}/${id}`, {
@@ -133,10 +133,13 @@ function StoreProvider({ children }: any) {
                     "Authorization": `Bearer ${TOKEN}`
                 })
             })
-            const data = await response.json()
-            return data
-            console.log(data)
-        }catch(error){
+           
+            if(response.status === 204){
+                const data = await response.json()
+                getAllTodos();
+            }
+           
+        } catch (error) {
             throw new Error("Poor network connection")
         }
     }
@@ -164,14 +167,13 @@ function StoreProvider({ children }: any) {
     }
 
     const handleUpdateTodo = (event: React.MouseEvent, id: string) => {
+        setId(id)
         getTodo(id)
         setOpenUpdate(true)
-        setId(id)
-      
     }
 
     const handleUpdateFormSubmit = async (event: React.MouseEvent) => {
-       
+
         console.log(id)
         try {
             const response = await fetch(`${url}/${id}`, {
@@ -186,8 +188,7 @@ function StoreProvider({ children }: any) {
             if (response.status === 200) {
                 const data = await response.json();
                 getAllTodos();
-                // if(await deleteTodo(id))  
-               
+
             }
 
         } catch (error) {
@@ -204,12 +205,13 @@ function StoreProvider({ children }: any) {
         openUpdate,
         open,
         setOpen,
+        deleteTodo,
         setOpenUpdate,
         handleAddFormSubmit,
         handleUpdateFormSubmit,
         handleUpdateTodo,
         todoUpdate,
-        setTodoUpdate
+        setTodoUpdate,
     }
     const Provider = Context.Provider
     return <Provider value={value}> {children} </Provider>
