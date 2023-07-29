@@ -2,16 +2,19 @@
 
 import React from "react";
 import { useStoreContext } from "../context/Context";
+import { FiEdit } from "react-icons/fi";
 
 const Todos = () => {
-    const { data } = useStoreContext();
+    const { data, handleUpdateTodo } = useStoreContext();
     return (
         <div>
             {data?.map((todo) => (
                 <div key={todo.id}>
-                    
                     <div>
                         <input type="checkbox" onChange={(event) => console.log(event.target.checked)} />
+                    </div>
+                    <div>
+                        <button type="button" onClick={(event) => handleUpdateTodo(event, todo.id)}><FiEdit /></button>
                     </div>
 
                     <div>

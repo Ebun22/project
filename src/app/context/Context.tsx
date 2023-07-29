@@ -30,15 +30,22 @@ const todo = {
     description: '',
     due_date: ' '
 }
-
 interface Context {
     data: Todo[] | null,
     handleAddTodo: Function,
     todoData: TodoData,
     setTodoData: Dispatch<SetStateAction<TodoData>>,
     open: boolean,
+    openUpdate: boolean,
+    id: string,
+    // setId: Dispatch<SetStateAction<string>>,
+    setOpenUpdate: Dispatch<SetStateAction<boolean>>,
     setOpen: Dispatch<SetStateAction<boolean>>,
     handleAddFormSubmit: ReactEventHandler,
+    handleUpdateFormSubmit: (event: React.MouseEvent, id: string) => void,
+    handleUpdateTodo: (event: React.MouseEvent, id: string) => void,
+    todoUpdate: TodoData,
+    setTodoUpdate: Dispatch<SetStateAction<TodoData>>,
 }
 
 const Context = createContext<null | Context>(null);
@@ -54,12 +61,15 @@ export function useStoreContext() {
 
 function StoreProvider({ children }: any) {
     const [url, setURL] = useState("https://api.todoist.com/rest/v2/tasks")
-    const [data, setData] = useState<Todo[]>([])
-    const [todoData, setTodoData] = useState<TodoData>(todo)
-    const [open, setOpen] = useState<boolean>(false)
+    const [data, setData] = useState([])
+    const [todoData, setTodoData] = useState(todo)
+    const [todoUpdate, setTodoUpdate] = useState(todo)
+    const [id, setId] = useState('')
+    const [open, setOpen] = useState(false)
+    const [openUpdate, setOpenUpdate] = useState(false)
 
-
-
+    // console.log(todoUpdate)
+    // console.log(todoData)
     const getAllTodos = async () => {
         const response = await fetch(url, {
             method: 'GET',
@@ -101,11 +111,10 @@ function StoreProvider({ children }: any) {
                 'content-type': 'application/json',
                 "X-Request-Id": `${X_REQUEST_ID}`,
                 "Authorization": `Bearer ${TOKEN}`,
-
             },
             body: JSON.stringify(todoData),
         })
-        if (response.status === 200)  setOpen(false)
+        if (response.status === 200) setOpen(false)
         try {
             const data = await response.json();
             console.log(data)
@@ -113,17 +122,77 @@ function StoreProvider({ children }: any) {
         } catch (error) {
 
         }
-       
+
+    }
+    const deleteTodo = () => {
+
+    }
+
+    const getTodo = async (id: string) => {
+        try {
+            const response = await fetch(`${url}/${id}`, {
+                method: 'GET',
+                headers: new Headers({
+                    "Authorization": `Bearer ${TOKEN}`
+                })
+            })
+
+            const data = await response.json();
+            setTodoUpdate({
+                content: data.content,
+                description: data.description,
+                due_date: data.due.date,
+            })
+
+        } catch (error) {
+
+        }
+
+    }
+
+    const handleUpdateTodo = (event: React.MouseEvent, id: string) => {
+        getTodo(id)
+        setOpenUpdate(true)
+        // if(todoUpdate.content)setOpenUpdate(true)
+    }
+
+    const handleUpdateFormSubmit = async (event: React.MouseEvent, id: string) => {
+        try {
+            const response = await fetch(`${url}/${id}`, {
+                method: 'POST',
+                headers: new Headers({
+                    'content-type': 'application/json',
+                    "X-Request-Id": `${X_REQUEST_ID}`,
+                    "Authorization": `Bearer ${TOKEN}`,
+                }),
+                body: JSON.stringify(todoUpdate)
+            })
+            if (response.status === 200) {
+                const data = await response.json();
+                deleteTodo(id)
+                getAllTodos();
+            }
+
+        } catch (error) {
+            throw new Error(`${error}: Sorry this page ca't be reached`)
+        }
     }
 
     const value = {
+        id,
         data,
         handleAddTodo,
         todoData,
         setTodoData,
+        openUpdate,
         open,
         setOpen,
+        setOpenUpdate,
         handleAddFormSubmit,
+        handleUpdateFormSubmit,
+        handleUpdateTodo,
+        todoUpdate,
+        setTodoUpdate
     }
     const Provider = Context.Provider
     return <Provider value={value}> {children} </Provider>

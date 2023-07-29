@@ -1,14 +1,14 @@
 "use client"
 
 import React from "react";
-import { TodoFilter, Todos, AddTodo } from ".";
+import { TodoFilter, Todos, AddTodo, UpdateTodo } from ".";
 import { useStoreContext } from "../context/Context";
 
 
 
 const TodoList = () => {
 
-    const { handleAddTodo, open } = useStoreContext();
+    const { handleAddTodo, open, openUpdate } = useStoreContext();
 
     return (
         <>
@@ -21,6 +21,7 @@ const TodoList = () => {
                     <button type="button" onClick={(event) => handleAddTodo(event)}>Add todo +</button>
                 </div>
                 {open && <AddTodo />}
+                {openUpdate && <UpdateTodo />}
                 <Todos />
             </div>
         </>
