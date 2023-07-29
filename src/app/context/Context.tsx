@@ -56,7 +56,7 @@ function StoreProvider({ children }: any) {
     const [todoData, setTodoData] = useState<TodoData>(todo)
     const [open, setOpen] = useState<boolean>(false)
 
-    console.log(todoData)
+
 
     const getAllTodos = async () => {
         const response = await fetch(url, {
@@ -85,29 +85,32 @@ function StoreProvider({ children }: any) {
         getAllTodos();
     }, [])
 
-    const handleAddTodo = async () => {
+    const handleAddTodo = () => {
         setOpen(true)
-        // const response = await fetch(url, {
-        //     method: 'POST',
-        //     headers: new Headers({
-        //         'content-type': 'application/json',
-        //         "X-Request-Id": "c5c378a8-d569-48ff-ab56-e4a026e98378" ,
-        //         "Authorization": "Bearer f537f19a7d6ea045ec2db7d7597ecb526ed9c362",
-        //     }),
-        //     // data,
-        // })
-
-        // try{
-        //     const data = await response.json();
-        //     console.log(data)
-        // }catch(error){
-
-        // }
 
     }
-    const handleAddFormSubmit = (event: React.MouseEvent) => {
+
+    const handleAddFormSubmit = async (event: React.MouseEvent) => {
         event.preventDefault();
-        setOpen(false)
+        console.log(todoData)
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                "X-Request-Id": "c5c378a8-d569-48ff-ab56-e4a026e98378",
+                "Authorization": "Bearer f537f19a7d6ea045ec2db7d7597ecb526ed9c362",
+            },
+            body: JSON.stringify(todoData),
+        })
+        if (response.status === 200)  setOpen(false)
+        try {
+            const data = await response.json();
+            console.log(data)
+            setData(data)
+        } catch (error) {
+
+        }
+       
     }
 
     const value = {
