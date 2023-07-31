@@ -1,7 +1,7 @@
 "use client"
 
 import React, { Dispatch, ReactEventHandler, SetStateAction, useEffect, useState } from "react";
-import toast, { Toaster } from 'react-hot-toast';
+import { toast } from "react-toastify";
 import { useContext, createContext } from "react";
 import { TOKEN } from '../API';
 import { X_REQUEST_ID } from '../API';
@@ -62,7 +62,7 @@ export function useStoreContext() {
 
 function StoreProvider({ children }: any) {
     const [url, setURL] = useState("https://api.todoist.com/rest/v2/tasks")
-    const [data, setData] = useState([])
+    const [data, setData] = useState<Todo[] | null>(null)
     const [todoData, setTodoData] = useState(todo)
     const [todoUpdate, setTodoUpdate] = useState(todo)
     const [id, setId] = useState('')
@@ -102,45 +102,57 @@ function StoreProvider({ children }: any) {
         setOpen(true)
 
     }
-   
+
     const handleAddFormSubmit = async (event: React.MouseEvent) => {
         event.preventDefault();
         console.log(todoData)
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json',
-                "X-Request-Id": `${X_REQUEST_ID}`,
-                "Authorization": `Bearer ${TOKEN}`,
-            },
-            body: JSON.stringify(todoData),
-        })
-        if (response.status === 200) setOpen(false)
+
         try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json',
+                    "X-Request-Id": `${X_REQUEST_ID}`,
+                    "Authorization": `Bearer ${TOKEN}`,
+                },
+                body: JSON.stringify(todoData),
+            })
+            if (response.status === 200) {
+                toast.success("Todo added sucessfully", {
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 3000, //3 seconds
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                });
+                getAllTodos();
+                setOpen(false)
+            }
+
             const data = await response.json();
             console.log(data)
-            setData(data)
         } catch (error) {
-
+            throw new Error(`${error}: Sorry this page can't be reached`)
         }
 
     }
+
     const deleteTodo = async (id: string) => {
         console.log(id)
-      
-            const response = await fetch(`${url}/${id}`, {
-                method: 'DELETE',
-                headers: new Headers({
-                    "Authorization": `Bearer ${TOKEN}`
-                })
+
+        const response = await fetch(`${url}/${id}`, {
+            method: 'DELETE',
+            headers: new Headers({
+                "Authorization": `Bearer ${TOKEN}`
             })
-           
-            if(response.status === 204){
-                getAllTodos();
-                toast('Here is your toast.');
-                // toast.error("Task successfully deleted")
-            }
-           
+        })
+
+        if (response.status === 204) {
+            getAllTodos();
+            toast('Toast is good', { hideProgressBar: true, autoClose: 4000, type: 'error' })
+            // toast.error("Task successfully deleted")
+        }
+
     }
 
     const getTodo = async (id: string) => {
@@ -169,6 +181,7 @@ function StoreProvider({ children }: any) {
         setId(id)
         getTodo(id)
         setOpenUpdate(true)
+
     }
 
     const handleUpdateFormSubmit = async (event: React.MouseEvent) => {
@@ -191,7 +204,7 @@ function StoreProvider({ children }: any) {
             }
 
         } catch (error) {
-            throw new Error(`${error}: Sorry this page ca't be reached`)
+            throw new Error(`${error}: Sorry this page can't be reached`)
         }
     }
 
