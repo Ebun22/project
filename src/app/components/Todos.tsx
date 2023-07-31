@@ -12,30 +12,45 @@ const Todos = () => {
             {data ? (
                 data.map((todo) => (
                     <div className='shadow-lg shadow-indigo-500/40 mx-auto bg-white rounded-lg w-1/2 mb-14 p-6'>
-                        <div key={todo.id} >
-                            <div>
-                                <input type="checkbox" onChange={(event) => console.log(event.target.checked)} />
+                        <div key={todo.id} className='flex flex-row space-x-44'>
+
+                            <div className="w-3/5 flex flex-row">
+                                <div className="w-7">
+                                    <input type="checkbox" onChange={(event) => console.log(event.target.checked)} />
+                                </div>
+                                <div>
+                                    <div>
+                                        <h2 className="font-bold text-lg">{todo.content}</h2>
+                                    </div>
+                                    <div>
+                                        <p>{todo.description}</p>
+                                        <p className='text-xs font-extralight italic text-slate-800 mt-4'>{todo.due.date}</p>
+                                    </div>
+                                </div>
+
+
                             </div>
-                            <div>
-                                <button type="button" onClick={(event) => handleUpdateTodo(event, todo.id)}><FiEdit /></button>
+
+                            <div className='flex flex-col w-18 space-y-20'>
+                                <div className="w-14 flex flex-row">
+                                    <div className='mr-8'>
+                                        <button type="button" onClick={(event) => handleUpdateTodo(event, todo.id)}><FiEdit /></button>
+                                    </div>
+                                    <div>
+                                        <button type="button" onClick={() => deleteTodo(todo.id)}><RiDeleteBin6Line /></button>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    {todo.is_completed ?
+                                        <p>Complete</p>
+                                        :
+                                        <p>Pending</p>
+                                    }
+                                </div>
+
                             </div>
-                            <div>
-                                <button type="button" onClick={() => deleteTodo(todo.id)}><RiDeleteBin6Line /></button>
-                            </div>
-                            <div>
-                                <p>{todo.content}</p>
-                            </div>
-                            <div>
-                                <p>{todo.description}</p>
-                                <p>{todo.due.date}</p>
-                            </div>
-                            <div>
-                                {todo.is_completed ?
-                                    <p>Complete</p>
-                                    :
-                                    <p>Pending</p>
-                                }
-                            </div>
+
                         </div>
                     </div>
 
