@@ -20,7 +20,7 @@ const Todos = () => {
                                 </div>
                                 <div>
                                     <div>
-                                        <h2 className="font-bold text-lg">{todo.content}</h2>
+                                        <h2 className="font-bold text-lg">{todo.content.charAt(0).toUpperCase() + todo.content.slice(1) }</h2>
                                     </div>
                                     <div>
                                         <p>{todo.description}</p>
