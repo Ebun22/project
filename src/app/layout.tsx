@@ -20,7 +20,7 @@ export default function RootLayout({
 
       <body className={inter.className}>
         <StoreProvider>
-          <main className="container"> {children}</main>
+          <main className="w-full"> {children}</main>
         </StoreProvider>
       </body>
 

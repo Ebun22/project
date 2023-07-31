@@ -12,7 +12,7 @@ const TodoList = () => {
 
     return (
         <>
-            <div>
+            <div className='flex flex-col justify-center w-full'>
                 <div>
                     <h1>Todo List Application</h1>
                 </div>
