@@ -1,6 +1,7 @@
 "use client"
 
 import React, { Dispatch, ReactEventHandler, SetStateAction, useEffect, useState } from "react";
+import toast, { Toaster } from 'react-hot-toast';
 import { useContext, createContext } from "react";
 import { TOKEN } from '../API';
 import { X_REQUEST_ID } from '../API';
@@ -101,7 +102,7 @@ function StoreProvider({ children }: any) {
         setOpen(true)
 
     }
-
+   
     const handleAddFormSubmit = async (event: React.MouseEvent) => {
         event.preventDefault();
         console.log(todoData)
@@ -126,7 +127,7 @@ function StoreProvider({ children }: any) {
     }
     const deleteTodo = async (id: string) => {
         console.log(id)
-        try {
+      
             const response = await fetch(`${url}/${id}`, {
                 method: 'DELETE',
                 headers: new Headers({
@@ -135,13 +136,11 @@ function StoreProvider({ children }: any) {
             })
            
             if(response.status === 204){
-                const data = await response.json()
                 getAllTodos();
+                toast('Here is your toast.');
+                // toast.error("Task successfully deleted")
             }
            
-        } catch (error) {
-            throw new Error("Poor network connection")
-        }
     }
 
     const getTodo = async (id: string) => {
