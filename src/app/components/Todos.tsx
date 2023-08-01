@@ -12,7 +12,7 @@ const Todos = () => {
             {data ? (
                 data.map((todo) => (
                     <div className='shadow-lg shadow-indigo-500/40 mx-auto bg-white rounded-lg w-1/2 mb-14 p-6'>
-                        <div key={todo.id} className='flex flex-row space-x-44'>
+                        <div key={todo.id} className='flex flex-row space-x-36'>
 
                             <div className="w-3/5 flex flex-row">
                                 <div className="w-7">
@@ -20,7 +20,7 @@ const Todos = () => {
                                 </div>
                                 <div>
                                     <div>
-                                        <h2 className="font-bold text-lg">{todo.content.charAt(0).toUpperCase() + todo.content.slice(1) }</h2>
+                                        <h2 className="font-bold text-lg">{todo.content.charAt(0).toUpperCase() + todo.content.slice(1)}</h2>
                                     </div>
                                     <div>
                                         <p>{todo.description}</p>
@@ -41,11 +41,16 @@ const Todos = () => {
                                     </div>
                                 </div>
 
-                                <div>
+                                <div className="w-8">
                                     {todo.is_completed ?
-                                        <p>Complete</p>
+                                        <div className="rounded-lg p-2 text-center w-20 bg-red-300">
+                                            <p className="text-lime-700 text-xs">Complete</p>
+                                        </div>
                                         :
-                                        <p>Pending</p>
+                                        <div className="rounded-lg p-2 text-center w-20 bg-red-300">
+                                            <p className='text-red-700 text-xs'>Pending</p>
+                                        </div>
+
                                     }
                                 </div>
 
