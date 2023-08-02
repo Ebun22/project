@@ -16,7 +16,10 @@ const Todos = () => {
 
                             <div className="w-3/5 flex flex-row">
                                 <div className="w-7">
-                                    <input type="checkbox" onChange={(event) => console.log(event.target.checked)} />
+                                    <input 
+                                    type="checkbox" 
+                                    className="form-checkbox text-green-500"
+                                    onChange={(event) => console.log(event.target.checked)} />
                                 </div>
                                 <div>
                                     <div>

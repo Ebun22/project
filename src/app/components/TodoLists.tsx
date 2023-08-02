@@ -17,8 +17,11 @@ const TodoList = () => {
                     <h1>Todo List Application</h1>
                 </div>
                 <TodoFilter />
-                <div>
-                    <button type="button" onClick={(event) => handleAddTodo(event)}>Add todo +</button>
+                <div className="mx-auto w-1/2 text-center rounded-lg bg-white my-8 shadow-lg hover:shadow-inner">
+                    <button 
+                    type="button" 
+                    className="text-center py-4 "
+                    onClick={(event) => handleAddTodo(event)}>Add todo +</button>
                 </div>
                 {open && <AddTodo />}
                 {openUpdate && <UpdateTodo />}
