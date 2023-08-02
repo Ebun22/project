@@ -6,7 +6,8 @@ import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
 const Todos = () => {
-    const { data, handleUpdateTodo, deleteTodo } = useStoreContext();
+    const { data, handleUpdateTodo, deleteTodo, filter } = useStoreContext();
+    console.log(filter)
     return (
         <div className='flex flex-col justify-center w-full '>
             {data ? (

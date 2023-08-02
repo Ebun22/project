@@ -39,6 +39,8 @@ interface Context {
     open: boolean,
     openUpdate: boolean,
     id: string,
+    filter: string | null, 
+    setFilter: Dispatch<SetStateAction<string | null>>,
     setTodoData: Dispatch<SetStateAction<TodoData>>,
     deleteTodo: (id: string) => void,
     setOpenUpdate: Dispatch<SetStateAction<boolean>>,
@@ -65,6 +67,7 @@ function StoreProvider({ children }: any) {
     const [data, setData] = useState<Todo[] | null>(null)
     const [todoData, setTodoData] = useState(todo)
     const [todoUpdate, setTodoUpdate] = useState(todo)
+    const [filter, setFilter] = useState<string | null>(null)
     const [id, setId] = useState('')
     const [open, setOpen] = useState(false)
     const [openUpdate, setOpenUpdate] = useState(false)
@@ -217,6 +220,8 @@ function StoreProvider({ children }: any) {
         openUpdate,
         open,
         setOpen,
+        filter, 
+        setFilter,
         deleteTodo,
         setOpenUpdate,
         handleAddFormSubmit,
