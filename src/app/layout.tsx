@@ -21,6 +21,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <StoreProvider>
           <main className="w-full min-h-screen bg-indigo-200"> {children}</main>
+          <div id="modal-root"></div>
         </StoreProvider>
       </body>
 

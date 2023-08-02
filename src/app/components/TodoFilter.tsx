@@ -11,18 +11,18 @@ const TodoFilter = () => {
 
     const searchParams = useSearchParams();
     const params = searchParams.get('')
-    setFilter(params)
+    
     return (
         <>
             <div className="rounded-lg flex items-stretch flex-row w-full mx-auto shadow-lg mb-4 bg-white ">
                 <div className="grow p-4 bg-black text-center text-white rounded-lg">
-                    <Link href="/?=All_todos">All Todos</Link>
+                    <Link href="/?=All_todos" onClick={() => setFilter(params)}>All Todos</Link>
                 </div>
                 <div className="grow text-center p-4">
-                    <Link href="/?=pending">Pending</Link>
+                    <Link href="/?=pending" onClick={() => setFilter(params)}>Pending</Link>
                 </div>
                 <div className="grow text-center p-4">
-                    <Link href="/?=completed">Completed</Link>
+                    <Link href="/?=completed" onClick={() => setFilter(params)}>Completed</Link>
                 </div>
 
             </div>

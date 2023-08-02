@@ -43,6 +43,7 @@ interface Context {
     setFilter: Dispatch<SetStateAction<string | null>>,
     setTodoData: Dispatch<SetStateAction<TodoData>>,
     deleteTodo: (id: string) => void,
+    handleCheck: (event: React.ChangeEvent<HTMLInputElement>, id:string) => void,
     setOpenUpdate: Dispatch<SetStateAction<boolean>>,
     setOpen: Dispatch<SetStateAction<boolean>>,
     handleAddFormSubmit: ReactEventHandler,
@@ -210,6 +211,12 @@ function StoreProvider({ children }: any) {
             throw new Error(`${error}: Sorry this page can't be reached`)
         }
     }
+    const handleCheck = (event: React.ChangeEvent<HTMLInputElement>, id: string) => {
+        console.log(id)
+       setData((prev:Todo[] | null) =>
+           prev && prev.map((item: Todo) => (item.id === id ? {...item, is_completed: !item.is_completed} : item))
+       )
+    }
 
     const value = {
         id,
@@ -223,6 +230,7 @@ function StoreProvider({ children }: any) {
         filter, 
         setFilter,
         deleteTodo,
+        handleCheck,
         setOpenUpdate,
         handleAddFormSubmit,
         handleUpdateFormSubmit,

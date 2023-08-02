@@ -1,6 +1,7 @@
 "use client"
 
-import React from "react"
+import React from "react";
+import ReactDom from 'react-dom';
 import { useStoreContext } from "../context/Context";
 
 const AddTodo = () => {
