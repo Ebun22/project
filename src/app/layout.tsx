@@ -16,11 +16,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="min-h-fit">
 
-      <body className={inter.className}>
+      <body className="min-h-fit h-full bg-black">
         <StoreProvider>
-          <main className="w-full min-h-screen bg-indigo-200"> {children}</main>
+          <main className="w-full min-h-screen bg-black"> {children}</main>
           <div id="modal-root"></div>
         </StoreProvider>
       </body>

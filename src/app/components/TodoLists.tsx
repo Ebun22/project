@@ -19,24 +19,20 @@ const TodoList = () => {
                     <h1 className='mb-4 text-2xl font-bold text-center'>All {filter ? filter : "Todos"} </h1>
                     <TodoFilter />
                 </div>
-                <Dialog
-                    open={open}
-                    onOpenChange={setOpen}
-                >
 
-                    <DialogTrigger asChild>
-                        <div className="mx-auto w-1/2 text-center rounded-lg bg-white my-8 shadow-lg hover:shadow-inner">
-                            <button
-                                type="button"
-                                className="text-center py-4"
-                                onClick={(event) => handleAddTodo(event)}>Add todo +</button>
-                        </div>
-                    </DialogTrigger>
-                    {open &&
-                        
-                            <AddTodo />
-                    }
-                </Dialog>
+                <div className="mx-auto w-1/2 text-center rounded-lg bg-white my-8 shadow-lg hover:shadow-inner">
+                    <button
+                        type="button"
+                        className="text-center py-4"
+                        onClick={(event) => handleAddTodo(event)}>Add todo +
+                    </button>
+                </div>
+
+                {open &&
+                    <div className='fixed inser-0 bg-black w-full'>
+                        <AddTodo />
+                    </div>
+                }
                 {openUpdate && <UpdateTodo />}
                 <Todos />
             </div>
