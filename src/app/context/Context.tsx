@@ -8,17 +8,29 @@ import { X_REQUEST_ID } from '../API';
 
 type candidate = string
 type votes = string
-const todo = {
-    content: '',
-    description: '',
-    due_date: ' '
+
+const Details = {
+    name: '',
+    matric_No: '',
+    email: ' ',
+    password: '',
+}
+interface Form {
+    name: string,
+    matric_No: string,
+    email: string,
+    password: string,
 }
 
 interface Context {
-    // vote: votes[] | null,
     candidateData: candidate[] | null,
     showVote: boolean,
+    showSignUp: boolean,
+    form: Form,
+    setForm: Dispatch<SetStateAction<Form>>,
+    setShowSignUp: Dispatch<SetStateAction<boolean>>,
     handleVotes: React.ChangeEventHandler<HTMLInputElement>,
+    handleFormSubmit: (event: React.MouseEvent) => void,
     handleClick: React.MouseEventHandler<HTMLButtonElement>
 }
 
@@ -35,30 +47,42 @@ export function useStoreContext() {
 
 function StoreProvider({ children }: any) {
     // const [url, setURL] = useState("https://api.todoist.com/rest/v2/tasks")
-    const [showVote, setShowVote]  = useState(false);
+    const [showVote, setShowVote] = useState(false);
+    const [showSignUp, setShowSignUp] = useState(false);
     const [vote, setVote] = useState<votes[] | null>(null)
+    const [form, setForm] = useState<Form>(Details)
     const [candidateData, setCandidateData] = useState<candidate[] | null>([
         "Tinubu",
         "Asake",
         "Atiku",
         "Peter Obi"
     ])
-    
-const handleClick = () => {
-    setShowVote(true)
-}
- 
-const handleVotes = (event: React.ChangeEvent<HTMLInputElement>) => {
-    
-    const newValue = event.target.value
-    setVote(prev => (prev ? [...prev, newValue] : [newValue]))
-console.log(vote)
-}
+
+    const handleClick = () => {
+        setShowVote(true)
+    }
+
+    const handleVotes = (event: React.ChangeEvent<HTMLInputElement>) => {
+
+        const newValue = event.target.value
+        setVote(prev => (prev ? [...prev, newValue] : [newValue]))
+        console.log(vote)
+    }
+
+    const handleFormSubmit = (event: React.MouseEvent) => {
+        event.preventDefault()
+    }
+
     const value = {
         candidateData,
         handleClick,
         showVote,
+        showSignUp,
+        form,
+        setForm,
+        setShowSignUp,
         handleVotes,
+        handleFormSubmit,
     }
 
     const Provider = Context.Provider

@@ -3,19 +3,24 @@ import Image from 'next/image';
 import home from './images/home.png'
 import React from 'react';
 import { useStoreContext } from '../context/Context';
-import { Votes } from '.';
+import { SignUp, Votes } from '.';
 
 const LandingPage = () => {
 
-    const { handleClick, showVote,} = useStoreContext() 
+    const { handleClick, showVote, showSignUp, setShowSignUp } = useStoreContext()
 
     return (
         <>
-            <div className="text-white mt-4 ml-16 mr-16 sm:">
+       { showSignUp &&
+         <SignUp />}
+            <div className="text-white mt-4 ml-16 mr-16 z-0">
                 <div className="flex flex-row my-2">
                     <p className="grow my-2"><span>E</span>-voting</p>
                     <div className='rounded-lg grow text-right'>
-                        <button className='rounded-full p-2 px-6 border-solid border-2 border-white '>SignUp</button>
+                        <button
+                            onClick={() => setShowSignUp(true)}
+                            className='rounded-full p-2 px-6 border-solid border-2 border-white'
+                        >SignUp</button>
                     </div>
 
                 </div>
@@ -42,6 +47,8 @@ const LandingPage = () => {
                     </div>
                 </div>
             </div>
+               
+
             {showVote && <Votes />}
         </>
     )
