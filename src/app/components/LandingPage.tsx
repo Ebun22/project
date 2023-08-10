@@ -1,6 +1,6 @@
 "use client"
 import Image from 'next/image';
-import home from './images/home.png'
+import home from '../images/home.png'
 import React from 'react';
 import { useStoreContext } from '../context/Context';
 import { SignUp, Votes } from '.';

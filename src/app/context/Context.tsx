@@ -21,12 +21,26 @@ interface Form {
     email: string,
     password: string,
 }
+const ElectionForm = {
+    title: '',
+    about:'',
+    numOfCandidates: '',
+    candidateName: [],
+}
 
+interface ElectionFormType {
+    title: string,
+    about: string,
+    numOfCandidates: string,
+    candidateName: candidate[],
+}
 interface Context {
     candidateData: candidate[] | null,
     showVote: boolean,
     showSignUp: boolean,
     form: Form,
+    electionForm: ElectionFormType, 
+    setElectionForm: Dispatch<SetStateAction<ElectionFormType>>,
     setForm: Dispatch<SetStateAction<Form>>,
     setShowSignUp: Dispatch<SetStateAction<boolean>>,
     handleVotes: React.ChangeEventHandler<HTMLInputElement>,
@@ -49,8 +63,9 @@ function StoreProvider({ children }: any) {
     // const [url, setURL] = useState("https://api.todoist.com/rest/v2/tasks")
     const [showVote, setShowVote] = useState(false);
     const [showSignUp, setShowSignUp] = useState(false);
-    const [vote, setVote] = useState<votes[] | null>(null)
+    const [vote, setVote] = useState<string | null>(null)
     const [form, setForm] = useState<Form>(Details)
+    const [electionForm, setElectionForm] = useState<ElectionFormType>(ElectionForm)
     const [candidateData, setCandidateData] = useState<candidate[] | null>([
         "Tinubu",
         "Asake",
@@ -65,7 +80,7 @@ function StoreProvider({ children }: any) {
     const handleVotes = (event: React.ChangeEvent<HTMLInputElement>) => {
 
         const newValue = event.target.value
-        setVote(prev => (prev ? [...prev, newValue] : [newValue]))
+        setVote(newValue)
         console.log(vote)
     }
 
@@ -80,6 +95,8 @@ function StoreProvider({ children }: any) {
         showSignUp,
         form,
         setForm,
+        electionForm, 
+        setElectionForm,
         setShowSignUp,
         handleVotes,
         handleFormSubmit,
