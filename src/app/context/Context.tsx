@@ -39,7 +39,11 @@ interface Context {
     showVote: boolean,
     showSignUp: boolean,
     form: Form,
-    electionForm: ElectionFormType, 
+    electionForm: ElectionFormType,
+    addInput: boolean, 
+    handleAddInput: React.MouseEventHandler<HTMLButtonElement>,
+    inputCounter: Number, 
+    setAddInput:Dispatch<SetStateAction<boolean>> , 
     setElectionForm: Dispatch<SetStateAction<ElectionFormType>>,
     setForm: Dispatch<SetStateAction<Form>>,
     setShowSignUp: Dispatch<SetStateAction<boolean>>,
@@ -60,9 +64,11 @@ export function useStoreContext() {
 }
 
 function StoreProvider({ children }: any) {
-    // const [url, setURL] = useState("https://api.todoist.com/rest/v2/tasks")
+    // const [url, setURL] = useState("https://api.todoist.com/rest/v2/tasks") 
     const [showVote, setShowVote] = useState(false);
+    const [addInput, setAddInput] = useState(false);
     const [showSignUp, setShowSignUp] = useState(false);
+    const [inputCounter, setInputCounter] = useState(0)
     const [vote, setVote] = useState<string | null>(null)
     const [form, setForm] = useState<Form>(Details)
     const [electionForm, setElectionForm] = useState<ElectionFormType>(ElectionForm)
@@ -84,6 +90,10 @@ function StoreProvider({ children }: any) {
         console.log(vote)
     }
 
+    const handleAddInput = () => {
+       setInputCounter(inputCounter + 1)
+    }
+
     const handleFormSubmit = (event: React.MouseEvent) => {
         event.preventDefault()
     }
@@ -95,10 +105,14 @@ function StoreProvider({ children }: any) {
         showSignUp,
         form,
         setForm,
-        electionForm, 
+        electionForm,
+        inputCounter, 
         setElectionForm,
         setShowSignUp,
+        handleAddInput,
         handleVotes,
+        addInput, 
+        setAddInput,
         handleFormSubmit,
     }
 

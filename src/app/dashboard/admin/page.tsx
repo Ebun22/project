@@ -2,13 +2,13 @@
 import Image from "next/image";
 import user from "@/app/images/user.png"
 import React from "react";
-import { Votes } from "@/app/components";
+import { Votes, AddInput } from "@/app/components";
 import { useStoreContext } from "@/app/context/Context";
 
 
 const Dashboard = () => {
  
-    const {electionForm, setElectionForm} = useStoreContext()
+    const {electionForm, addInput, handleAddInput, setElectionForm} = useStoreContext()
     const {title, about, numOfCandidates, candidateName} = electionForm
     return (
         <div className="text-white flex flex-rows">
@@ -72,11 +72,11 @@ const Dashboard = () => {
                         }
                             />
                         </div>
-                        <AddInput />
+                       { addInput && <AddInput />}
                         <button 
                         type="button" 
                         className="rounded-lg bg-blue-950 mt-6 text-white p-2"
-                        onClick=""
+                        onClick={handleAddInput}
                         >Add Candidate</button>
 
                         <div className="mt-4 flex flex-col">
