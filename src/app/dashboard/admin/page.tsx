@@ -2,34 +2,34 @@
 import Image from "next/image";
 import user from "@/app/images/user.png"
 import React from "react";
-import { Votes, AddInput } from "@/app/components";
+import { AiOutlineUser, AiFillPieChart } from 'react-icons/ai';
+import { MdHowToVote } from 'react-icons/md';
+import { Votes, AddInput, UploadElections } from "@/app/components";
 import { useStoreContext } from "@/app/context/Context";
 
 
+
 const Dashboard = () => {
- 
-    const {electionForm, addInput, handleAddInput, setElectionForm} = useStoreContext()
-    const {title, about, numOfCandidates, candidateName} = electionForm
+
+    const { electionForm, addInput, handleAddInput, setElectionForm } = useStoreContext()
+    const { title, about, numOfCandidates, candidateName } = electionForm
     return (
         <div className="text-white flex flex-rows">
             <div className="min-h-full w-52 bg-blue-950 px-6 flex flex-col mx-auto align-center">
                 <div className='flex flex-col mx-auto'>
-                    <Image
-                        src={user}
-                        alt="user logo"
-                        width="100"
-                        height="100"
-                    />
-
+                <AiOutlineUser 
+                className="text-8xl font-extralight"
+                />
+                   
                 </div>
                 <div className="text-xs text-center">
                     <p> Id: <span className="text-xs text-neutral-200">19/52HA109</span></p>
                 </div>
 
                 <div className="mt-24 text-left">
-                    <p className="py-4">Home</p>
-                    <p>Upload Elections</p>
-                    <p className="py-4">Results</p>
+                    <p className="py-4"><span></span>Home</p>
+                    <p><span><MdHowToVote /></span>Ballots</p>
+                    <p className="py-4"><span><AiFillPieChart /></span>Results</p>
                 </div>
             </div>
 
@@ -37,56 +37,17 @@ const Dashboard = () => {
                 <div className="py-10 ">
                     <h1 className="text-black text-4xl font-bold">Welcome Admin</h1>
                 </div>
-                <div className="h-full w-3/4">
-                    <form>
-                        <div className="mt-4 flex flex-col">
-                            <label htmlFor="election_title" className="font-bold">Election Title:</label>
-                            <input 
-                            type="text"
-                            value={title} 
-                            name="election_title"  
-                            className="mt-2 rounded-lg pl-4 border-2 border-solid border-black "
-                            onChange={(event) => setElectionForm(prev => ({...prev, title: event?.target.value}))}/>
+                <div className="flex flex-rows">
+                    <div className="rounded-lg p-4 bg-blue-950 text-white mr-24">
+                        <p>8</p>
+                        <p>Total Number of active voters</p>
                         </div>
-
-                        <div className="mt-4 flex flex-col">
-                            <label htmlFor="num_of_candidates" className="font-bold">Number of Candidates:</label>
-                            <input type="text" 
-                            value={numOfCandidates}
-                            name="num_of_candidates"
-                            className="mt-2 rounded-lg pl-4 border-2 border-solid border-black "
-                            onChange={(event) => setElectionForm(prev => ({...prev, numOfCandidates: event?.target.value}))}/>
-                        </div>
-                        
-                        <div className="mt-4 flex flex-col">
-                            <label htmlFor="candidates_name" className="font-bold">Candidate's Name: </label>
-                            <input 
-                            type="text"  
-                            value={candidateName} 
-                            name="candidates_name"  
-                            className="mt-2 rounded-lg pl-4 border-2 border-solid border-black "
-                            onChange={(event) => 
-                            setElectionForm(prev => ({
-                                ...prev, 
-                                candidateName: [...prev.candidateName,  event?.target.value]}))
-                        }
-                            />
-                        </div>
-                       <AddInput />
-                        <button 
-                        type="button" 
-                        className="rounded-lg bg-blue-950 mt-6 text-white p-2"
-                        onClick={handleAddInput}
-                        >Add Candidate</button>
-
-                        <div className="mt-4 flex flex-col">
-                            <label htmlFor="about">About position</label>
-                            <textarea  value={about} name="about"  onChange={(event) => setElectionForm(prev => ({...prev, about: event?.target.value}))}/>
-                        </div>
-                    </form>
+                    <div className='rounded-lg p-4 bg-blue-950 text-white'>
+                        <p className="">4</p>
+                        <p>Total number of Elections done</p></div>
                 </div>
+             <UploadElections />
 
-               
             </div>
 
 
