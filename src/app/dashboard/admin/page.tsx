@@ -33,11 +33,11 @@ const Dashboard = () => {
                 </div>
             </div>
 
-            <div className="h-screen text-black bg-white w-full p-10">
+            <div className="h-full text-black bg-white w-full p-10">
                 <div className="py-10 ">
                     <h1 className="text-black text-4xl font-bold">Welcome Admin</h1>
                 </div>
-                <div className="">
+                <div className="h-full w-3/4">
                     <form>
                         <div className="mt-4 flex flex-col">
                             <label htmlFor="election_title" className="font-bold">Election Title:</label>
@@ -72,7 +72,7 @@ const Dashboard = () => {
                         }
                             />
                         </div>
-                       { addInput && <AddInput />}
+                       <AddInput />
                         <button 
                         type="button" 
                         className="rounded-lg bg-blue-950 mt-6 text-white p-2"
@@ -86,9 +86,7 @@ const Dashboard = () => {
                     </form>
                 </div>
 
-                <div className="mt-16">
-                    <Votes />
-                </div>
+               
             </div>
 
 

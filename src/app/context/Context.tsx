@@ -91,6 +91,7 @@ function StoreProvider({ children }: any) {
     }
 
     const handleAddInput = () => {
+        console.log(inputCounter)
        setInputCounter(inputCounter + 1)
     }
 

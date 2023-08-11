@@ -7,7 +7,7 @@ const Dashboard = () => {
 
     return (
         <div className="text-white flex flex-rows">
-            <div className="min-h-full w-52 bg-blue-950 px-6 flex flex-col mx-auto align-center">
+            <div className=" w-52 bg-blue-950 px-6 flex flex-col mx-auto align-center">
                 <div className='flex flex-col mx-auto'>
                     <Image
                         src={user}
