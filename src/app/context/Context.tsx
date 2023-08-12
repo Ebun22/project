@@ -43,6 +43,9 @@ interface Context {
     addInput: boolean, 
     handleAddInput: React.MouseEventHandler<HTMLButtonElement>,
     inputCounter: Number, 
+    handleHome: React.MouseEventHandler<HTMLButtonElement>, 
+    handleNewBallot: React.MouseEventHandler<HTMLButtonElement>, 
+    handleResult: React.MouseEventHandler<HTMLButtonElement>,
     setAddInput:Dispatch<SetStateAction<boolean>> , 
     setElectionForm: Dispatch<SetStateAction<ElectionFormType>>,
     setForm: Dispatch<SetStateAction<Form>>,
@@ -68,6 +71,9 @@ function StoreProvider({ children }: any) {
     const [showVote, setShowVote] = useState(false);
     const [addInput, setAddInput] = useState(false);
     const [showSignUp, setShowSignUp] = useState(false);
+    const [showResult, setShowResult] = useState(false);
+    const [showNewBallot, setShowNewBallot] = useState(false);
+    const [showHome, setShowHome] = useState(false);
     const [inputCounter, setInputCounter] = useState(0)
     const [vote, setVote] = useState<string | null>(null)
     const [form, setForm] = useState<Form>(Details)
@@ -94,6 +100,23 @@ function StoreProvider({ children }: any) {
         console.log(inputCounter)
        setInputCounter(inputCounter + 1)
     }
+    const handleHome = () => {
+        setShowHome(true)
+        setShowNewBallot(false)
+        setShowResult(false)
+    }
+
+    const handleNewBallot = () => {
+        setShowHome(false)
+        setShowNewBallot(true)
+        setShowResult(false)
+    }
+
+    const handleResult = () => {
+        setShowHome(false)
+        setShowNewBallot(false)
+        setShowResult(true)
+    }
 
     const handleFormSubmit = (event: React.MouseEvent) => {
         event.preventDefault()
@@ -111,6 +134,9 @@ function StoreProvider({ children }: any) {
         setElectionForm,
         setShowSignUp,
         handleAddInput,
+        handleHome, 
+        handleNewBallot, 
+        handleResult,
         handleVotes,
         addInput, 
         setAddInput,
