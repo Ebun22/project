@@ -1,6 +1,6 @@
 "use client"
 
-import React, { Dispatch, ReactEventHandler, SetStateAction, useEffect, useState } from "react";
+import React, { Dispatch, LegacyRef, ReactEventHandler, SetStateAction, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { useContext, createContext } from "react";
 import { TOKEN } from '../API';
@@ -23,7 +23,7 @@ interface Form {
 }
 const ElectionForm = {
     title: '',
-    about:'',
+    about: '',
     numOfCandidates: '',
     candidateName: [],
 }
@@ -40,13 +40,19 @@ interface Context {
     showSignUp: boolean,
     form: Form,
     electionForm: ElectionFormType,
-    addInput: boolean, 
-    handleAddInput: React.MouseEventHandler<HTMLButtonElement>,
-    inputCounter: Number, 
-    handleHome: React.MouseEventHandler<HTMLButtonElement>, 
-    handleNewBallot: React.MouseEventHandler<HTMLButtonElement>, 
-    handleResult: React.MouseEventHandler<HTMLButtonElement>,
-    setAddInput:Dispatch<SetStateAction<boolean>> , 
+    addInput: boolean,
+    showHome: boolean,
+    showNewBallot: boolean,
+    showResult: boolean,
+    homeRef: React.MutableRefObject<HTMLParagraphElement | null>,
+    ballotRef: React.MutableRefObject<HTMLParagraphElement | null>,
+    resultRef: React.MutableRefObject<HTMLParagraphElement | null>,
+    handleAddInput: React.MouseEventHandler<HTMLButtonElement | null>,
+    inputCounter: Number,
+    handleHome: (homeRef: React.MutableRefObject<HTMLParagraphElement | null>) => void,
+    handleNewBallot: (ballotRef: React.MutableRefObject<HTMLParagraphElement | null>) => void,
+    handleResult: (resultRef: React.MutableRefObject<HTMLParagraphElement | null>) => void,
+    setAddInput: Dispatch<SetStateAction<boolean>>,
     setElectionForm: Dispatch<SetStateAction<ElectionFormType>>,
     setForm: Dispatch<SetStateAction<Form>>,
     setShowSignUp: Dispatch<SetStateAction<boolean>>,
@@ -96,23 +102,34 @@ function StoreProvider({ children }: any) {
         console.log(vote)
     }
 
+    const homeRef = useRef<HTMLParagraphElement>(null);
+    const ballotRef = useRef<HTMLParagraphElement>(null);
+    const resultRef = useRef<HTMLParagraphElement>(null);
+
     const handleAddInput = () => {
         console.log(inputCounter)
-       setInputCounter(inputCounter + 1)
+        setInputCounter(inputCounter + 1)
     }
-    const handleHome = () => {
+    const handleHome = (homeRef: React.MutableRefObject<HTMLParagraphElement | null>) => {
+        console.log("you clisked on show home")
+        if (homeRef.current) homeRef.current.focus(), console.log(homeRef.current)
+        
         setShowHome(true)
         setShowNewBallot(false)
         setShowResult(false)
     }
 
-    const handleNewBallot = () => {
+    const handleNewBallot = (ballotRef: React.MutableRefObject<HTMLParagraphElement | null>) => {
+        console.log("you clisked on newBallot")
+        if (ballotRef.current) ballotRef.current.focus()
         setShowHome(false)
         setShowNewBallot(true)
         setShowResult(false)
     }
 
-    const handleResult = () => {
+    const handleResult = (resultRef: React.MutableRefObject<HTMLParagraphElement | null>) => {
+        console.log("you clisked on show Result")
+        if (resultRef.current) resultRef.current.focus()
         setShowHome(false)
         setShowNewBallot(false)
         setShowResult(true)
@@ -130,15 +147,21 @@ function StoreProvider({ children }: any) {
         form,
         setForm,
         electionForm,
-        inputCounter, 
+        inputCounter,
         setElectionForm,
         setShowSignUp,
         handleAddInput,
-        handleHome, 
-        handleNewBallot, 
+        handleHome,
+        handleNewBallot,
         handleResult,
         handleVotes,
-        addInput, 
+        homeRef,
+        ballotRef,
+        resultRef,
+        showHome,
+        showNewBallot,
+        showResult,
+        addInput,
         setAddInput,
         handleFormSubmit,
     }

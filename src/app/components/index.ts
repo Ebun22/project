@@ -6,3 +6,4 @@ export { default as UploadElections } from "./UploadElections";
 export { default as Voted } from "./Voted";
 export { default as Header } from "./Header";
 export { default as Home } from "./Home";
+export { default as Results } from "./Results";
