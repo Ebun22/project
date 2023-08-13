@@ -58,11 +58,13 @@ const SignUp = () => {
                         </div>
                     </form>
                     <div>
+                    <p className="py-4 text-sm text-right">Already have an account? <a>Login</a></p>
                         <button
                             type="button"
                             className="flex align-center m-auto text-center p-2 justify-center bg-white text-black"
                         onClick={(event) => handleFormSubmit(event)}
                         >
+                          
                             Submit</button>
                     </div>
                 </div>

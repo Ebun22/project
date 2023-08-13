@@ -11,8 +11,8 @@ const LandingPage = () => {
 
     return (
         <>
-       { showSignUp &&
-         <SignUp />}
+            {showSignUp &&
+                <SignUp />}
             <div className="text-white mt-4 ml-16 mr-16 z-0">
                 <div className="flex flex-row my-2">
                     <p className="grow my-2"><span>E</span>-voting</p>
@@ -47,9 +47,7 @@ const LandingPage = () => {
                     </div>
                 </div>
             </div>
-               
 
-            {showVote && <Votes />}
         </>
     )
 }
