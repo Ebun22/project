@@ -4,8 +4,9 @@ import user from "../images/user.png"
 import React, { useRef } from "react";
 import { MdHowToVote } from 'react-icons/md';
 import { AiOutlineUser, AiOutlineHome, AiFillPieChart } from 'react-icons/ai';
-import { Votes } from "../components";
+import { Results, Votes } from "../components";
 import { useStoreContext } from "../context/Context";
+import Home from "../page";
 
 const Dashboard = () => {
     const { electionForm, addInput, homeRef, ballotRef, resultRef, showHome, showNewBallot, showResult, handleAddInput, setElectionForm, handleHome, handleNewBallot, handleResult } = useStoreContext()
@@ -59,25 +60,16 @@ const Dashboard = () => {
             </div>
 
             <div className="h-screen text-black bg-white w-full p-10">
-                <div className="py-10 ">
-                    <h1 className="text-black text-4xl font-bold">Welcome UserName</h1>
+                <div className="pb-10 ">
+                    <h1 className="text-black text-4xl font-bold">Welcome Segun</h1>
                 </div>
-                <div className="flex flex-rows">
-                    <div className="rounded-lg p-4 bg-blue-950 text-white mr-24">
-                        <p>8</p>
-                        <p>Total Number of active voters</p>
-                    </div>
-                    <div className='rounded-lg p-4 bg-blue-950 text-white'>
-                        <p className="">4</p>
-                        <p>Total number of candidates</p></div>
+                <div className="h-full">
+                {showHome && <Home />}
+                {showResult && <Results />}
+                {showNewBallot && <Votes />}
                 </div>
-                <div className="mt-16">
-                    <Votes />
-                </div>
+               
             </div>
-
-
-
         </div >
     )
 }

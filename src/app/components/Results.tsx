@@ -54,13 +54,13 @@ const Results = () => {
     }
 
     return (
-        <div className="h-screen">
+        <div className="h-full w-full">
             <Header />
             <div >
                 <Bar
                     options={options}
                     data={data}
-                    className="mt-10 mx-auto"
+                    className="mt-10 mx-auto w-4/5 h-4/5"
                 />
             </div>
             <div className="text-center mt-4">
